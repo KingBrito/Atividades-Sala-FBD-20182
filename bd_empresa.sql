@@ -86,7 +86,7 @@ update Funcionario
 	SET	Dnr = 5
 	where Pnome= 'Ronaldo';
 	Update Funcionario
-	SET	Dnr = 4
+	SET	Dnr = 5
 	where Pnome= 'Joice	';
 	Update Funcionario
 	SET	Dnr = 4

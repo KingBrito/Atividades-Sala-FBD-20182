@@ -23,6 +23,3 @@ ORDER BY salario, f.pnome
 SELECT *
 FROM funcionario f
 ORDER BY salario ASC, f.pnome DESC
-
-
-
