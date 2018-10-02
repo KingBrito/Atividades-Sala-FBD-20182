@@ -12,7 +12,7 @@ WHERE NOT EXISTS (
 )
 
 -- b)
--- Aqui não rola!
+-- Assim não vai!
 SELECT p.pid, p.pnome
 FROM pecas p, fornpecaproj fpj, fornecedor f
 WHERE p.pid=fpj.pid AND fpj.fid=f.fid AND f.fnome<>'Maria Silva' AND fnome<>'João Silva'
@@ -25,13 +25,6 @@ WHERE NOT EXISTS(
 	WHERE p.pid=fpj.pid AND fpj.fid=f.fid AND (f.fnome='Maria Silva' OR f.fnome='João Silva') 
 )
 
-
--- g)
-SELECT fpj.pid
-FROM fornpecaproj fpj
-GROUP BY fpj.pid
-HAVING count(DISTINCT fpj.fid)>1
-
 -- c)
 -- nao aparece quem ta com 0
 SELECT fpj.pid, sum(fpj.qtd)
@@ -40,6 +33,30 @@ GROUP BY fpj.pid
 
 SELECT p.pid, (select sum(fpj.qtd) from fornpecaproj fpj where fpj.pid=p.pid)
 FROM pecas p
+
+-- d)
+SELECT f.fnome
+FROM fornecedor f, fornpecaproj fpj, projetos j
+WHERE f.fid=fpj.fid AND fpj.jid=j.jid AND j.jnome='J1'
+
+-- e) 
+SELECT p.pnome
+FROM fornecedor f, fornpecaproj fpj, pecas p
+WHERE f.fid=fpj.fid AND fpj.jid=p.pid AND f.fnome='F1'
+
+-- f)
+SELECT p.pnome, p.pid, max(fpj.qtd), min(fpj.qtd) 
+FROM pecas p, fornpecaproj fpj
+WHERE fpj.pid=p.pid 
+GROUP BY p.pid
+
+
+-- g)
+SELECT fpj.pid
+FROM fornpecaproj fpj
+GROUP BY fpj.pid
+HAVING count(DISTINCT fpj.fid)>1
+
 
 -- h)
 SELECT f.fid, sum(fpj.qtd)
