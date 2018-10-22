@@ -101,6 +101,14 @@ WHERE c.numero_cand = v1.numero_cand AND
       c.localidade_id = v1.localidade_id
 ORDER BY percentual DESC
 
+SELECT c.nome, 1.0*v.numero_votos/l.numero_votantes as percentual
+FROM candidatos c, localidades l, votos v
+WHERE c.localidade_id = l.id AND 
+      v.localidade_id = c.localidade_id AND 
+      v.numero_cand = c.numero_cand AND
+      v.localidade_id = l.id
+ORDER BY percentual DESC
+
 -- g)
 SELECT cg.descricao, (select count(*) from candidatos c where c.cargo_id=cg.id) as qtd
 FROM cargos cg
